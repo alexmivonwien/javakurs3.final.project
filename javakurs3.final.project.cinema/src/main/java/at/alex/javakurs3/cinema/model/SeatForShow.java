@@ -2,12 +2,22 @@ package at.alex.javakurs3.cinema.model;
 
 import java.math.BigDecimal;
 
+import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
+import javax.persistence.Table;
+
+@Entity
+@Table(name = "seatforshow")
 public class SeatForShow extends Seat {
 
 	private boolean isFree = true;
 	private BigDecimal price;
-	private FilmShow filmShow;
 	
+	@JoinColumn(name = "filmshow_id", nullable=false)
+	@ManyToOne( optional = false )
+	private FilmShow filmShow;
 	
 	public BigDecimal getPrice() {
 		return price;

@@ -2,14 +2,32 @@ package at.alex.javakurs3.cinema.model;
 
 import java.math.BigDecimal;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+//@Entity
+//@Table(name = "address")
 public class Address {
 	
+	@Id
+	@GeneratedValue(strategy=GenerationType.AUTO)
+	private int id;
 	private String street;
 	private String houseNo;
 	private District district;
 	private String plz;
 	private BigDecimal lattitude;
 	private BigDecimal longitude;
+	
+	public int getId() {
+		return id;
+	}
+	public void setId(int id) {
+		this.id = id;
+	}
 	public String getStreet() {
 		return street;
 	}

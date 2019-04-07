@@ -3,8 +3,15 @@ package at.alex.javakurs3.cinema.model;
 import java.math.BigDecimal;
 import java.util.Set;
 
-public class Reservation {
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 
+public class Reservation {
+	
+	@Id
+	@GeneratedValue(strategy=GenerationType.AUTO)
+	private int id;
 	private Customer customer;
 	private FilmShow filmShow;
 	private Set<Seat> seatsReserved;

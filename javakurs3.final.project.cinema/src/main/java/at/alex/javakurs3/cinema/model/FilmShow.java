@@ -4,19 +4,38 @@ import java.time.LocalDateTime;
 import java.util.Set;
 
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
+import javax.persistence.Table;
 
 @Entity
+@Table(name = "filmshow")
 public class FilmShow {
+	@Id
+	@GeneratedValue(strategy=GenerationType.AUTO)
+	private int id;
 	
-	@OneToOne
+	@JoinColumn(name = "film_id", nullable=false)
+	@ManyToOne( optional = false )
 	private Film film;
 	private LocalDateTime begining;
 	private LocalDateTime end;
 	
-	@OneToOne
+	@JoinColumn(name = "cinema_id", nullable=false)
+	@ManyToOne( optional = false )
 	private Cinema cinema;
+	
+	public int getId() {
+		return id;
+	}
+	public void setId(int id) {
+		this.id = id;
+	}
 	
 	@OneToMany
 	private Set <SeatForShow> seatsForShow;
@@ -27,6 +46,7 @@ public class FilmShow {
 	public void setFilm(Film film) {
 		this.film = film;
 	}
+	
 	public LocalDateTime getBegining() {
 		return begining;
 	}
