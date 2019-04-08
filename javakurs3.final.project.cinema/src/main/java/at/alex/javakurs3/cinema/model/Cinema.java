@@ -27,10 +27,7 @@ public class Cinema {
 	private String name;
 	//private Address address;
 	
-	//@OneToMany (fetch = FetchType.LAZY, cascade = CascadeType.ALL, targetEntity = Seat.class, mappedBy = "cinema")
-	
 	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, targetEntity = Seat.class, mappedBy = "cinema")
-    //@JoinTable(name = "cinema_seat", joinColumns = { @JoinColumn (name = "seat_id") }, inverseJoinColumns = { @JoinColumn(name = "cinema_id") })
 	private Set<Seat> allSeats;
 	
 	public int getId() {
