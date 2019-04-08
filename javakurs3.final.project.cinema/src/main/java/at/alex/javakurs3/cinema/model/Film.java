@@ -1,5 +1,7 @@
 package at.alex.javakurs3.cinema.model;
 
+import javax.persistence.Access;
+import javax.persistence.AccessType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -8,6 +10,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "film")
+@Access(AccessType.FIELD)
 public class Film {
 	
 	@Id

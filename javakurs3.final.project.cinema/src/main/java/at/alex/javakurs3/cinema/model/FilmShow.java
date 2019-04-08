@@ -3,7 +3,11 @@ package at.alex.javakurs3.cinema.model;
 import java.time.LocalDateTime;
 import java.util.Set;
 
+import javax.persistence.Access;
+import javax.persistence.AccessType;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -15,7 +19,9 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "filmshow")
+@Access(AccessType.FIELD)
 public class FilmShow {
+	
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	private int id;
@@ -37,7 +43,7 @@ public class FilmShow {
 		this.id = id;
 	}
 	
-	@OneToMany
+	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, targetEntity = SeatForShow.class, mappedBy = "filmShow")
 	private Set <SeatForShow> seatsForShow;
 	
 	public Film getFilm() {

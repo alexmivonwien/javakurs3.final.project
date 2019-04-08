@@ -29,10 +29,13 @@
         <property name="show_sql">true</property>
 
         <!-- Drop and re-create the database schema on startup -->
-        <property name="hbm2ddl.auto">create.update</property>
+        <property name="hbm2ddl.auto">update</property>
         
         <mapping class="at.alex.javakurs3.cinema.model.Cinema"/>
         <mapping class="at.alex.javakurs3.cinema.model.Seat"/>
+        <mapping class="at.alex.javakurs3.cinema.model.Film"/>
+        <mapping class="at.alex.javakurs3.cinema.model.FilmShow"/>
+        <mapping class="at.alex.javakurs3.cinema.model.SeatForShow"/>
 
     </session-factory>
 

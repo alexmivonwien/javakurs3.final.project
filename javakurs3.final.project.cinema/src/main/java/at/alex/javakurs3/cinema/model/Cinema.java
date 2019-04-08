@@ -27,6 +27,7 @@ public class Cinema {
 	private String name;
 	//private Address address;
 	
+	
 	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, targetEntity = Seat.class, mappedBy = "cinema")
 	private Set<Seat> allSeats;
 	
