@@ -24,6 +24,23 @@ public class Seat implements Comparable <Seat>{
 	@ManyToOne( optional = false )
 	private Cinema cinema;
 	
+	@Override
+	public boolean equals (Object another){
+		if (another == null || !(another instanceof Seat))
+			return false;
+		
+		Seat anotherSeat = (Seat)another;
+		
+		return this.rowNo == anotherSeat.rowNo && this.seatNo == anotherSeat.seatNo
+				&& this.cinema.getName().equals(anotherSeat.getCinema().getName());
+	}
+	
+	
+	@Override
+	public int hashCode (){
+		return this.rowNo ^ this.seatNo ^ this.cinema.getName().hashCode();
+	}
+	
 	
 	public int getId() {
 		return id;

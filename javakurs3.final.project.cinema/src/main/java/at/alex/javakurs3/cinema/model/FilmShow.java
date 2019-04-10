@@ -1,5 +1,6 @@
 package at.alex.javakurs3.cinema.model;
 
+import java.sql.Date;
 import java.time.LocalDateTime;
 import java.util.Set;
 
@@ -29,8 +30,8 @@ public class FilmShow {
 	@JoinColumn(name = "film_id", nullable=false)
 	@ManyToOne( optional = false )
 	private Film film;
-	private LocalDateTime begining;
-	private LocalDateTime end;
+	private Date begining;
+	private Date end;
 	
 	@JoinColumn(name = "cinema_id", nullable=false)
 	@ManyToOne( optional = false )
@@ -53,16 +54,16 @@ public class FilmShow {
 		this.film = film;
 	}
 	
-	public LocalDateTime getBegining() {
+	public Date getBegining() {
 		return begining;
 	}
-	public void setBegining(LocalDateTime begining) {
+	public void setBegining(Date begining) {
 		this.begining = begining;
 	}
-	public LocalDateTime getEnd() {
+	public Date getEnd() {
 		return end;
 	}
-	public void setEnd(LocalDateTime end) {
+	public void setEnd(Date end) {
 		this.end = end;
 	}
 	public Cinema getCinema() {
