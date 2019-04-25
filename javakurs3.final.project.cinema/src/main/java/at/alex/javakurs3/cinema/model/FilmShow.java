@@ -1,7 +1,6 @@
 package at.alex.javakurs3.cinema.model;
 
 import java.sql.Date;
-import java.time.LocalDateTime;
 import java.util.Set;
 
 import javax.persistence.Access;
@@ -15,7 +14,6 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Entity

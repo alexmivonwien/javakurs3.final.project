@@ -2,15 +2,13 @@ package at.alex.javakurs3.cinema.hibernate.standalone;
 
 import java.math.BigDecimal;
 import java.sql.Date;
-import java.time.LocalDateTime;
+//import java.time.LocalDateTime;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.HashSet;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
-
-import javax.persistence.Query;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;

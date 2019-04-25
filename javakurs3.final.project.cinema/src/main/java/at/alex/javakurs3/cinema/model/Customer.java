@@ -1,6 +1,7 @@
 package at.alex.javakurs3.cinema.model;
 
-import java.time.LocalDate;
+//import java.time.LocalDate;
+import java.util.Date;
 
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -13,7 +14,7 @@ public class Customer {
 	private int id;
 	private String name;
 	private String nachname;
-	private LocalDate birthDate;
+	private Date birthDate;
 	private Address adress;
 	
 	public String getName() {
@@ -28,10 +29,12 @@ public class Customer {
 	public void setNachname(String nachname) {
 		this.nachname = nachname;
 	}
-	public LocalDate getBirthDate() {
+
+	public Date getBirthDate() {
 		return birthDate;
 	}
-	public void setBirthDate(LocalDate birthDate) {
+
+	public void setBirthDate(Date birthDate) {
 		this.birthDate = birthDate;
 	}
 	public Address getAdress() {

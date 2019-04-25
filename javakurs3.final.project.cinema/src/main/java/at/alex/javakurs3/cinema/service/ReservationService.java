@@ -1,9 +1,6 @@
 package at.alex.javakurs3.cinema.service;
 
 import java.math.BigDecimal;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.util.List;
 import java.util.Set;
 
 import javax.ejb.Stateless;
@@ -11,9 +8,7 @@ import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
-import at.alex.javakurs3.cinema.model.Cinema;
 import at.alex.javakurs3.cinema.model.Customer;
-import at.alex.javakurs3.cinema.model.Film;
 import at.alex.javakurs3.cinema.model.FilmShow;
 import at.alex.javakurs3.cinema.model.Reservation;
 import at.alex.javakurs3.cinema.model.Seat;

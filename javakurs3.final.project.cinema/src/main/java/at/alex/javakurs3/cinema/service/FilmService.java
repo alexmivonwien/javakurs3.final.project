@@ -1,18 +1,13 @@
 package at.alex.javakurs3.cinema.service;
 
-import java.time.LocalDateTime;
-
 import java.util.List;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.JoinType;
 import javax.persistence.criteria.Root;
 
-import at.alex.javakurs3.cinema.model.Cinema;
-import at.alex.javakurs3.cinema.model.Film;
 import at.alex.javakurs3.cinema.model.FilmShow;
 
 public class FilmService {
