@@ -13,13 +13,13 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "seat")
 @Access(AccessType.FIELD)
-public class Seat implements Comparable <Seat>{
+public class Seat implements Seatable {
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	private int id;
-	protected byte rowNo;
-	protected byte seatNo;
+	private byte rowNo;
+	private byte seatNo;
 	
 	@ManyToOne( optional = false )
 	private Cinema cinema;
@@ -59,13 +59,13 @@ public class Seat implements Comparable <Seat>{
 	}
 
 	@Override
-	public int compareTo (Seat  seat){
-		int diff = this.rowNo - seat.rowNo;
+	public int compareTo(Seatable seat) {
+		int diff = this.rowNo - seat.getRowNo();
 		
 		if (diff != 0){
 			return diff;
 		}
-		return this.seatNo - seat.seatNo;
+		return this.seatNo - seat.getSeatNo();
 	}
 	
 	public byte getRowNo() {

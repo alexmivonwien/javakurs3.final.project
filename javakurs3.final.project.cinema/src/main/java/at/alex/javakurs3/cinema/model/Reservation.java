@@ -14,7 +14,7 @@ public class Reservation {
 	private int id;
 	private Customer customer;
 	private FilmShow filmShow;
-	private Set<Seat> seatsReserved;
+	private Set<SeatForShow> seatsReserved;
 	private BigDecimal totalPrice;
 	
 	public BigDecimal getTotalPrice() {
@@ -35,10 +35,12 @@ public class Reservation {
 	public void setFilmShow(FilmShow filmShow) {
 		this.filmShow = filmShow;
 	}
-	public Set<Seat> getSeatsReserved() {
+
+	public Set<SeatForShow> getSeatsReserved() {
 		return seatsReserved;
 	}
-	public void setSeatsReserved(Set<Seat> seatsReserved) {
+
+	public void setSeatsReserved(Set<SeatForShow> seatsReserved) {
 		this.seatsReserved = seatsReserved;
 	}
 }

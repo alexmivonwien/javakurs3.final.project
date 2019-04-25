@@ -27,6 +27,11 @@ public class ReservationService {
 	public Reservation createReservation (Customer customer, FilmShow filmShow, Set<Seat> seats){
 		
 		BigDecimal totalPrice = BigDecimal.ZERO;
+
+		List list;
+
+		// 3.) Create a reservation and save it:
+		Reservation reservation = new Reservation();
 		
 		// 1.) Mark the seats as occupied and compute the total price:
 		for (SeatForShow seatForShow: filmShow.getSeatsForShow()){
@@ -36,8 +41,6 @@ public class ReservationService {
 		// 2.) update the FilmShow entry:
 		this.em.merge(filmShow);
 		
-		// 3.) Create a reservation and save it:
-		Reservation reservation = new Reservation();
 		reservation.setCustomer(customer);
 		reservation.setFilmShow(filmShow);
 		reservation.setSeatsReserved(seats);

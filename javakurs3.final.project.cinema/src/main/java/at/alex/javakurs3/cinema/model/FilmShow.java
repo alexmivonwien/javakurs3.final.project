@@ -1,6 +1,7 @@
 package at.alex.javakurs3.cinema.model;
 
 import java.sql.Date;
+import java.util.LinkedHashSet;
 import java.util.Set;
 
 import javax.persistence.Access;
@@ -34,16 +35,30 @@ public class FilmShow {
 	@JoinColumn(name = "cinema_id", nullable=false)
 	@ManyToOne( optional = false )
 	private Cinema cinema;
+
+	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, targetEntity = SeatForShow.class, mappedBy = "filmShow")
+	private Set<SeatForShow> seatsForShow;
 	
+	public FilmShow(Cinema cinema, Film film, Date begining, Date end) {
+		this.cinema = cinema;
+		this.film = film;
+		this.begining = begining;
+		this.end = end;
+		seatsForShow = new LinkedHashSet<SeatForShow>();
+
+		for (Seat seat : cinema.getAllSeats()) {
+			SeatForShow seatForShow = new SeatForShow(seat);
+			seatsForShow.add(seatForShow);
+			seatForShow.setFilmShow(this);
+		}
+	}
+
 	public int getId() {
 		return id;
 	}
 	public void setId(int id) {
 		this.id = id;
 	}
-	
-	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, targetEntity = SeatForShow.class, mappedBy = "filmShow")
-	private Set <SeatForShow> seatsForShow;
 	
 	public Film getFilm() {
 		return film;
