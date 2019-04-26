@@ -29,9 +29,14 @@ public class SeatForShow implements Seatable {
 	@ManyToOne( optional = false )
 	private FilmShow filmShow;
 	
-	public SeatForShow(Seat seat) {
+	public SeatForShow(Seat seat, FilmShow filmShow) {
 		this.rowNo = seat.getRowNo();
 		this.seatNo = seat.getSeatNo();
+		this.filmShow = filmShow;
+
+		if (!filmShow.getCinema().getAllSeats().contains(seat)) {
+			throw new IllegalArgumentException(" The seat " + seat.toString() + " does not belong to the filmShow " + filmShow);
+		}
 	}
 
 	public BigDecimal getPrice() {

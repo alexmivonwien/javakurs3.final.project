@@ -26,21 +26,29 @@ public class Seat implements Seatable {
 	
 	@Override
 	public boolean equals (Object another){
-		if (another == null || !(another instanceof Seat))
+		if (another == null || !(another instanceof Seat) || !(another instanceof SeatForShow))
 			return false;
 		
-		Seat anotherSeat = (Seat)another;
+		Seat anotherSeat = another instanceof Seat ? (Seat) another : null;
+		SeatForShow anotherSeatForShow = another instanceof SeatForShow ? (SeatForShow) another : null;
 		
-		return this.rowNo == anotherSeat.rowNo && this.seatNo == anotherSeat.seatNo
-				&& this.cinema.getName().equals(anotherSeat.getCinema().getName());
+		if (anotherSeat != null) {
+			return this.rowNo == anotherSeat.rowNo && this.seatNo == anotherSeat.seatNo && this.cinema.equals(anotherSeat.getCinema());
+		}
+
+		return this.rowNo == anotherSeatForShow.getRowNo() && this.seatNo == anotherSeatForShow.getSeatNo() && this.cinema.equals(anotherSeatForShow.getFilmShow().getCinema());
 	}
 	
 	
 	@Override
 	public int hashCode (){
-		return this.rowNo ^ this.seatNo ^ this.cinema.getName().hashCode();
+		return this.rowNo ^ this.seatNo ^ this.cinema.hashCode();
 	}
 	
+	@Override
+	public String toString() {
+		return "Seat row = " + this.getRowNo() + "; seatNo = " + this.seatNo + "; cinema = " + cinema.getName();
+	}
 	
 	public int getId() {
 		return id;

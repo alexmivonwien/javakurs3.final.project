@@ -10,8 +10,6 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinTable;
-import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
@@ -31,6 +29,10 @@ public class Cinema {
 	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, targetEntity = Seat.class, mappedBy = "cinema")
 	private Set<Seat> allSeats;
 	
+	public Cinema(String name) {
+		this.name = name;
+	}
+
 	public int getId() {
 		return id;
 	}
@@ -56,4 +58,20 @@ public class Cinema {
 		this.allSeats = allSeats;
 	}
 	
+	@Override
+	public boolean equals(Object another) {
+		if (another == null || !(another instanceof Cinema)) {
+			return false;
+		}
+
+		Cinema anotherCinema = (Cinema) another;
+		return this.name.equals(anotherCinema.getName());
+
+	}
+
+	@Override
+	public int hashCode() {
+		return this.name.hashCode();
+	}
+
 }

@@ -47,10 +47,15 @@ public class FilmShow {
 		seatsForShow = new LinkedHashSet<SeatForShow>();
 
 		for (Seat seat : cinema.getAllSeats()) {
-			SeatForShow seatForShow = new SeatForShow(seat);
+			SeatForShow seatForShow = new SeatForShow(seat, this);
 			seatsForShow.add(seatForShow);
 			seatForShow.setFilmShow(this);
 		}
+	}
+
+	@Override
+	public String toString() {
+		return "FilmShow: cinema = " + cinema.getName() + "; film = " + film.getName() + "; beginning = " + this.begining;
 	}
 
 	public int getId() {
