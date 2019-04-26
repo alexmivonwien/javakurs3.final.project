@@ -4,6 +4,8 @@ import java.sql.Date;
 import java.util.List;
 
 import javax.ejb.Stateless;
+import javax.ejb.TransactionAttribute;
+import javax.ejb.TransactionAttributeType;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.criteria.CriteriaBuilder;
@@ -39,6 +41,7 @@ public class FilmService {
 		return result;
 	}
 
+	@TransactionAttribute(TransactionAttributeType.REQUIRED) 
 	public void createEntitites() {
 
 		Film film1 = Action.createFilm("Star Wars", (short) 1978, (byte) 120);
@@ -52,10 +55,8 @@ public class FilmService {
 
 		em.persist(cinema1);
 		em.persist(cinema2);
-
-
-
-		FilmShow show = Action.createFilmShow(em, "Star wars", "Cinaplex Innenstadt", new Date(new java.util.Date().getTime()));
+		
+		FilmShow show = Action.createFilmShow(em, "Star wars", "Cinaplex InnereStadt", new Date(new java.util.Date().getTime()));
 		em.persist(show);
 
 	}

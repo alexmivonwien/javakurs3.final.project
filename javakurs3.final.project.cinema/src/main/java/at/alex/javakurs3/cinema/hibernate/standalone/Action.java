@@ -84,7 +84,7 @@ public class Action {
        	
 		Query query2 = em.createQuery("from Cinema  c where c.name = :nn");
     	query2.setParameter("nn", cinemaName);
-		List<Cinema> cinemas = query.getResultList();
+		List<Cinema> cinemas = query2.getResultList();
     	Cinema cinema = cinemas.get(0); 
 
 		FilmShow show = new FilmShow(cinema, film, beginning, calculateEndDate(beginning, film.getLengthMin()));
