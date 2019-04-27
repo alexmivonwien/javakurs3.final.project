@@ -23,7 +23,7 @@ public class Cinema {
 	private int id;
 	
 	private String name;
-	//private Address address;
+	private Address address;
 	
 	
 	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, targetEntity = Seat.class, mappedBy = "cinema")
@@ -31,6 +31,14 @@ public class Cinema {
 	
 	public Cinema(String name) {
 		this.name = name;
+	}
+
+	public Address getAddress() {
+		return address;
+	}
+
+	public void setAddress(Address address) {
+		this.address = address;
 	}
 
 	public int getId() {

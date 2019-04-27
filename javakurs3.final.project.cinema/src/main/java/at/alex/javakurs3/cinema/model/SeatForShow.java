@@ -8,6 +8,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
@@ -22,12 +23,15 @@ public class SeatForShow implements Seatable {
 	private byte rowNo;
 	private byte seatNo;
 
-	private boolean isFree = true;
 	private BigDecimal price;
 	
-	//@JoinColumn(name = "filmshow_id", nullable=false)
 	@ManyToOne( optional = false )
 	private FilmShow filmShow;
+	
+	@JoinColumn(name = "reservation_id", nullable=true)
+	@ManyToOne( optional = true )
+	private Reservation reservation;
+	
 	
 	public SeatForShow(Seat seat, FilmShow filmShow) {
 		this.rowNo = seat.getRowNo();
@@ -57,12 +61,16 @@ public class SeatForShow implements Seatable {
 	public void setSeatNo(byte seatNo) {
 		this.seatNo = seatNo;
 	}
-	public boolean isFree() {
-		return isFree;
+
+	
+	public Reservation getReservation() {
+		return reservation;
 	}
-	public void setFree(boolean isFree) {
-		this.isFree = isFree;
+
+	public void setReservation(Reservation reservation) {
+		this.reservation = reservation;
 	}
+
 	public FilmShow getFilmShow() {
 		return filmShow;
 	}

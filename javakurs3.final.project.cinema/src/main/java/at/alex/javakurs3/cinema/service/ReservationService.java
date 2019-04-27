@@ -26,13 +26,14 @@ public class ReservationService {
 		BigDecimal totalPrice = BigDecimal.ZERO;
 
 		// 3.) Create a reservation and save it:
-		Reservation reservation = new Reservation();
 		Set<SeatForShow> seatsReserved = new HashSet<>();
+		Reservation reservation = new Reservation(customer, filmShow, seatsReserved);
+		
 
 		// 1.) Mark the seats as occupied and compute the total price:
 		for (SeatForShow seatForShow : filmShow.getSeatsForShow()) {
 			if (seats.contains(seatForShow)) {
-				seatForShow.setFree(false);
+				seatForShow.setReservation(reservation);
 				seatsReserved.add(seatForShow);
 				totalPrice.add(seatForShow.getPrice());
 			}
