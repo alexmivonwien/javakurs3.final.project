@@ -1,5 +1,8 @@
 package at.alex.javakurs3.cinema.web;
 
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -16,69 +19,121 @@ import at.alex.javakurs3.cinema.model.Film;
 import at.alex.javakurs3.cinema.model.FilmShow;
 import at.alex.javakurs3.cinema.service.FilmService;
 
+/**
+ * 
+ * @author User
+ * @see https://zenidas.wordpress.com/recipes/primefaces-calendar-customization/
+ * @see https://stackoverflow.com/questions/26630795/pcalendar-highlight-specific-dates-values-from-bean
+ *
+ */
 @ManagedBean
 @ViewScoped
 public class FilmAndCinemaChooserBean {
-	
+
 	@Inject
 	private FilmService filmService;
-	
-	private List <FilmShow> futureFilmShows;
-	private Cinema selectedCinema;
-	private Film selectedFilm;
-	
-	private Map<Integer, Cinema> availableCinemas  = new HashMap<>();
-	private Map <Integer, Film> availableFilms = new HashMap<>();
-	
-	
+
+	private List<FilmShow> futureFilmShows;
+
+	private int selectedCinema;
+	private int selectedFilm;
+	private Date selectedDate;
+
+	private Map<Integer, String> availableCinemas = new HashMap<>();
+	private Map<Integer, String> availableFilms = new HashMap<>();
+	private List<Date> availableDates = new ArrayList<Date>();
+
 	@PostConstruct
-	private void init(){
+	private void init() {
 		futureFilmShows = filmService.findFilmShows(StringUtils.EMPTY);
-		
-		for (FilmShow filmShow : futureFilmShows){
-			availableCinemas.put(filmShow.getCinema().getId(), filmShow.getCinema());
-			availableFilms.put(filmShow.getFilm().getId(), filmShow.getFilm());
+
+		for (FilmShow filmShow : futureFilmShows) {
+			availableCinemas.put(filmShow.getCinema().getId(), filmShow.getCinema().toString());
+			availableFilms.put(filmShow.getFilm().getId(), filmShow.getFilm().toString());
+			availableDates.add(filmShow.getBeginning());
 		}
 	}
 
+	public String[] getAvailableDatesAsStringArray() {
+		if (availableDates.size() == 0) {
+			return new String[0];
+		}
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+		String[] result = new String[availableDates.size()];
+		
+		int i = 0;
+		for (Date date : availableDates) {
+			result[i++] = new String(sdf.format(date));
+		}
+		
+		return result;
+	}
 
-	public Cinema getSelectedCinema() {
+	public Date getSelectedDate() {
+		return selectedDate;
+	}
+
+	public void setSelectedDate(Date selectedDate) {
+		this.selectedDate = selectedDate;
+	}
+
+	public int getSelectedCinema() {
 		return selectedCinema;
 	}
 
-
-	public void setSelectedCinema(Cinema selectedCinema) {
+	public void setSelectedCinema(int selectedCinema) {
 		this.selectedCinema = selectedCinema;
 	}
 
-
-	public Film getSelectedFilm() {
+	public int getSelectedFilm() {
 		return selectedFilm;
 	}
 
-
-	public void setSelectedFilm(Film selectedFilm) {
+	public void setSelectedFilm(int selectedFilm) {
 		this.selectedFilm = selectedFilm;
 	}
 
+	public Map<Integer, String> getAvailableCinemas() {
+		if (this.selectedFilm != 0) { // a film is selected, filter all
+										// availableCinemas
+			availableCinemas.clear();
+			availableDates.clear();
 
-	public Map<Integer, Cinema> getAvailableCinemas() {
+			for (FilmShow filmShow : this.futureFilmShows) {
+				if (this.selectedFilm == -1 || (filmShow.getFilm().getId() == this.selectedFilm)) {
+					availableCinemas.put(filmShow.getCinema().getId(), filmShow.getCinema().toString());
+					availableDates.add(filmShow.getBeginning());
+				}
+			}
+		}
+		if (availableCinemas.size() == 1) {
+			for (Map.Entry<Integer, String> entry : availableCinemas.entrySet()) {
+				this.setSelectedCinema(entry.getKey());
+			}
+		}
 		return availableCinemas;
 	}
 
+	public Map<Integer, String> getAvailableFilms() {
+		if (this.selectedCinema != 0) { // a cinema is selected, filter all
+										// availableFilms
+			availableFilms.clear();
+			availableDates.clear();
 
-	public void setAvailableCinemas(Map<Integer, Cinema> availableCinemas) {
-		this.availableCinemas = availableCinemas;
-	}
+			for (FilmShow filmShow : this.futureFilmShows) {
+				if (this.selectedCinema == -1 || (filmShow.getCinema().getId() == this.selectedCinema)) {
+					availableFilms.put(filmShow.getFilm().getId(), filmShow.getFilm().toString());
+					availableDates.add(filmShow.getBeginning());
+				}
+			}
+		}
+		if (availableFilms.size() == 1) {
+			for (Map.Entry<Integer, String> entry : availableFilms.entrySet()) {
+				this.setSelectedFilm(entry.getKey());
+			}
+		}
 
-
-	public Map<Integer, Film> getAvailableFilms() {
 		return availableFilms;
 	}
 
-
-	public void setAvailableFilms(Map<Integer, Film> availableFilms) {
-		this.availableFilms = availableFilms;
-	}
-	
 }

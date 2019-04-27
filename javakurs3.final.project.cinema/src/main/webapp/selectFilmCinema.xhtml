@@ -5,27 +5,47 @@
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:p="http://primefaces.org/ui"
 	xmlns:c="http://java.sun.com/jsp/jstl/core">
-<h:head></h:head>
+<h:head>
+</h:head>
 <h:body>
-	<h:form id="cinemaFilmFormId">
+	<h:outputStylesheet name="/css/styles.css"/>
+    <script type="text/javascript">
+		function highlightDays(date) {
+		    var dates = ['2019-04-28', '2019-04-30'];
+		    var cssclass = &apos;&apos;;
+		    for (var i = 0; i &lt; dates.length; i++) {
+		        if (date.getDay() == new Date(dates[i]).getDay()) {
+		           cssclass = &apos;dateavailable&apos;;
+				    return [true, cssclass];
+		        }
+		    }
+		    return [true, ''];
+		}
+     </script>
+  	 <h:form id="cinemaFilmFormId">
 		<p:growl id="growl" life="2000" />
 		
 		<p:panel header="Select a cinema or a film" >
 			<h:panelGrid columns="2" style="margin-bottom:10px" cellpadding="5">
 		        <p:outputLabel for="filmSelectorId" value="Choose a film" />
 		        <p:selectOneMenu id="filmSelectorId" effect="fade" value="#{filmAndCinemaChooserBean.selectedFilm}" style="width:125px">
-		        	<p:ajax event="change" update="@this cinemaFilmFormId" process="@this cinemaFilmFormId" />
-		            <f:selectItem itemLabel="Select a film" itemValue="" noSelectionOption="true" />
+		        	<p:ajax event="change" update="@this cinemaSelectorId" process="@this filmSelectorId" />
+		            <f:selectItem itemLabel="Select a film" itemValue="-1"/>
 					<f:selectItems value="#{filmAndCinemaChooserBean.availableFilms.entrySet()}" var="entry" 
     					itemValue="#{entry.key}" itemLabel="#{entry.value}" />
 		        </p:selectOneMenu>
 		        
 		        <p:outputLabel for="cinemaSelectorId" value="Choose a cinema" />
 		        <p:selectOneMenu id="cinemaSelectorId" value="#{filmAndCinemaChooserBean.selectedCinema}" style="width:125px">
-		            <f:selectItem itemLabel="Select a cinema" itemValue="" noSelectionOption="true" />
+		        	<p:ajax event="change" update="@this filmSelectorId" process="@this cinemaSelectorId" />
+		            <f:selectItem itemLabel="Select a cinema" itemValue="-1" />
 					<f:selectItems value="#{filmAndCinemaChooserBean.availableCinemas.entrySet()}" var="entry" 
     					itemValue="#{entry.key}" itemLabel="#{entry.value}" />
 		        </p:selectOneMenu>
+		        
+		        
+		        <p:outputLabel for="calendarId" value="Choose Date:" />
+        		<p:calendar id="calendarId" beforeShowDay="highlightDays" value="#{filmAndCinemaChooserBean.selectedDate}" effect="fold" />
 		        
 	  		</h:panelGrid>
   		</p:panel>
