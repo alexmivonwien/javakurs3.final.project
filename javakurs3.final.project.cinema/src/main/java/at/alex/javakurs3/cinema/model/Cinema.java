@@ -89,4 +89,8 @@ public class Cinema {
 		return this.name.hashCode();
 	}
 
+	@Override
+	public String toString(){
+		return this.name;
+	}
 }

@@ -51,4 +51,9 @@ public class Film {
 	public void setDirector(String director) {
 		this.director = director;
 	}
+	
+	@Override
+	public String toString(){
+		return this.name + ", " + this.year + ", " + this.getDirector();
+	}
 }
