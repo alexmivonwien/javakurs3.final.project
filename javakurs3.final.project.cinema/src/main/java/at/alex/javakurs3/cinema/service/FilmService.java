@@ -68,6 +68,9 @@ public class FilmService {
 
 		FilmShow show2 = Action.createFilmShow(em, "Star wars", "Cinaplex Donaustadt", new Date(new java.util.Date().getTime()));
 		em.persist(show2);
+		
+		FilmShow show3 = Action.createFilmShow(em, "Empire strikes back", "Cinaplex Donaustadt", new Date(new java.util.Date().getTime()));
+		em.persist(show3);
 
 		
 	}

@@ -8,6 +8,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import org.apache.commons.lang3.StringUtils;
+
 @Entity
 @Table(name = "film")
 @Access(AccessType.FIELD)
@@ -54,6 +56,6 @@ public class Film {
 	
 	@Override
 	public String toString(){
-		return this.name + ", " + this.year + ", " + this.getDirector();
+		return this.name + ", " + this.year + (this.getDirector() !=null ? ", " + this.getDirector() : StringUtils.EMPTY);
 	}
 }

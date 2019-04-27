@@ -7,21 +7,22 @@
 	xmlns:c="http://java.sun.com/jsp/jstl/core">
 <h:head></h:head>
 <h:body>
-	<h:form id="cinemaFilmForm">
+	<h:form id="cinemaFilmFormId">
 		<p:growl id="growl" life="2000" />
 		
 		<p:panel header="Select a cinema or a film" >
 			<h:panelGrid columns="2" style="margin-bottom:10px" cellpadding="5">
 		        <p:outputLabel for="filmSelectorId" value="Choose a film" />
-		        <p:selectOneMenu id="filmSelectorId" value="#{filmAndCinemaChooserBean.selectedFilm}" style="width:125px">
-		            <f:selectItem itemLabel="Select a film" itemValue="" />
+		        <p:selectOneMenu id="filmSelectorId" effect="fade" value="#{filmAndCinemaChooserBean.selectedFilm}" style="width:125px">
+		        	<p:ajax event="change" update="@this cinemaFilmFormId" process="@this cinemaFilmFormId" />
+		            <f:selectItem itemLabel="Select a film" itemValue="" noSelectionOption="true" />
 					<f:selectItems value="#{filmAndCinemaChooserBean.availableFilms.entrySet()}" var="entry" 
     					itemValue="#{entry.key}" itemLabel="#{entry.value}" />
 		        </p:selectOneMenu>
 		        
 		        <p:outputLabel for="cinemaSelectorId" value="Choose a cinema" />
 		        <p:selectOneMenu id="cinemaSelectorId" value="#{filmAndCinemaChooserBean.selectedCinema}" style="width:125px">
-		            <f:selectItem itemLabel="Select a cinema" itemValue="" />
+		            <f:selectItem itemLabel="Select a cinema" itemValue="" noSelectionOption="true" />
 					<f:selectItems value="#{filmAndCinemaChooserBean.availableCinemas.entrySet()}" var="entry" 
     					itemValue="#{entry.key}" itemLabel="#{entry.value}" />
 		        </p:selectOneMenu>
