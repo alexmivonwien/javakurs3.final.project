@@ -11,18 +11,32 @@
 	<h:outputStylesheet name="/css/styles.css"/>
     <script type="text/javascript">
 		function highlightDays(date) {
-		    var dates = ['2019-04-28', '2019-04-30'];
+			invokeUpdateAvailableDates();
 		    var cssclass = &apos;&apos;;
+		    var dates = document.getElementById(&apos;cinemaFilmFormId:hiddenFieldId&apos;);
 		    for (var i = 0; i &lt; dates.length; i++) {
 		        if (date.getDay() == new Date(dates[i]).getDay()) {
 		           cssclass = &apos;dateavailable&apos;;
-				    return [true, cssclass];
+				   return [false];
 		        }
 		    }
-		    return [true, ''];
+		    return [true];
 		}
+
+
+	  function invokeUpdateAvailableDates() {
+	     var jsfCommandLink = document.getElementById("cinemaFilmFormId:updateAvailableDatesId");
+	     jsfCommandLink.click();
+	  }
+		
      </script>
   	 <h:form id="cinemaFilmFormId">
+  	 
+  	 <!-- @see https://www.theserverside.com/tutorial/How-to-invoke-a-JSF-managed-bean-asynchronously-through-JavaScript -->
+		 <h:inputHidden value = "#{filmAndCinemaChooserBean.availableDatesAsStringArray}" id = "hiddenFieldId" /> 
+		 <h:commandLink style="display:none" id="updateAvailableDatesId" action="#{filmAndCinemaChooserBean.updateAvailableDates}"
+                     />
+		
 		<p:growl id="growl" life="2000" />
 		
 		<p:panel header="Select a cinema or a film" >

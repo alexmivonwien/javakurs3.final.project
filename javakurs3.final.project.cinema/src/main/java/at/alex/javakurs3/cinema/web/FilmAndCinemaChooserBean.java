@@ -10,6 +10,7 @@ import java.util.Map;
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
+import javax.faces.event.ActionEvent;
 import javax.inject.Inject;
 
 import org.apache.commons.lang3.StringUtils;
@@ -22,8 +23,9 @@ import at.alex.javakurs3.cinema.service.FilmService;
 /**
  * 
  * @author User
+ * 
+ * @see https://stackoverflow.com/questions/16559559/disable-specific-dates-on-pcalendar
  * @see https://zenidas.wordpress.com/recipes/primefaces-calendar-customization/
- * @see https://stackoverflow.com/questions/26630795/pcalendar-highlight-specific-dates-values-from-bean
  *
  */
 @ManagedBean
@@ -54,6 +56,21 @@ public class FilmAndCinemaChooserBean {
 		}
 	}
 
+	public void updateAvailableDates() {
+		availableDates.clear();
+		for (FilmShow filmShow: futureFilmShows){
+			int filmShowCinemaId = filmShow.getCinema().getId();
+			int filmShowFilmId = filmShow.getFilm().getId();
+			
+			if ( 	(this.selectedFilm == -1 || this.selectedFilm == filmShowFilmId) 
+				 && (this.selectedCinema == -1 || this.selectedCinema == filmShowCinemaId)
+					){
+				availableDates.add(filmShow.getBeginning());
+			}
+		}
+	}
+	
+	
 	public String[] getAvailableDatesAsStringArray() {
 		if (availableDates.size() == 0) {
 			return new String[0];
