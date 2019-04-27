@@ -1,11 +1,15 @@
 package at.alex.javakurs3.cinema.web;
 
+import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
+import java.util.Set;
 
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
@@ -43,7 +47,7 @@ public class FilmAndCinemaChooserBean {
 
 	private Map<Integer, String> availableCinemas = new HashMap<>();
 	private Map<Integer, String> availableFilms = new HashMap<>();
-	private List<Date> availableDates = new ArrayList<Date>();
+	private Set<Date> availableDates = new HashSet<Date>();
 
 	@PostConstruct
 	private void init() {
@@ -71,19 +75,17 @@ public class FilmAndCinemaChooserBean {
 	}
 	
 	
-	public String[] getAvailableDatesAsStringArray() {
+	public String getAvailableDatesAsString() {
 		if (availableDates.size() == 0) {
-			return new String[0];
+			return "";
 		}
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-		String[] result = new String[availableDates.size()];
+		StringBuilder sb = new StringBuilder(StringUtils.EMPTY);
 		
-		int i = 0;
 		for (Date date : availableDates) {
-			result[i++] = new String(sdf.format(date));
+			sb.append(sdf.format(date) +",");
 		}
-		
-		return result;
+		return sb.toString();
 	}
 
 	public Date getSelectedDate() {
@@ -128,6 +130,8 @@ public class FilmAndCinemaChooserBean {
 				this.setSelectedCinema(entry.getKey());
 			}
 		}
+		
+		updateAvailableDates();
 		return availableCinemas;
 	}
 
@@ -150,6 +154,7 @@ public class FilmAndCinemaChooserBean {
 			}
 		}
 
+		updateAvailableDates();
 		return availableFilms;
 	}
 
