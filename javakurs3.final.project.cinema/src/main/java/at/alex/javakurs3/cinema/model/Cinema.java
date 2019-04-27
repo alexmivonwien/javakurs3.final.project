@@ -11,6 +11,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -23,11 +24,17 @@ public class Cinema {
 	private int id;
 	
 	private String name;
+	
+	@OneToOne
 	private Address address;
 	
 	
 	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, targetEntity = Seat.class, mappedBy = "cinema")
 	private Set<Seat> allSeats;
+	
+	public Cinema(){
+		
+	}
 	
 	public Cinema(String name) {
 		this.name = name;

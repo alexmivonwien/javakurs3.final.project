@@ -32,6 +32,9 @@ public class SeatForShow implements Seatable {
 	@ManyToOne( optional = true )
 	private Reservation reservation;
 	
+	public SeatForShow(){
+		
+	}
 	
 	public SeatForShow(Seat seat, FilmShow filmShow) {
 		this.rowNo = seat.getRowNo();

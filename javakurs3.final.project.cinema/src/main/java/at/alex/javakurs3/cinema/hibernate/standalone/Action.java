@@ -73,11 +73,11 @@ public class Action {
 		
 	}
 	
-	public static FilmShow createFilmShow(EntityManager em, String filmeName, String cinemaName, Date beginning) {
+	public static FilmShow createFilmShow(EntityManager em, String filmName, String cinemaName, Date beginning) {
 
     	
 		Query query = em.createQuery("from Film f where f.name = :nn");
-    	query.setParameter("nn", filmeName);
+    	query.setParameter("nn", filmName);
 		List<Film> films = query.getResultList();
     	Film film = films.get(0);
 
@@ -87,18 +87,12 @@ public class Action {
 		List<Cinema> cinemas = query2.getResultList();
     	Cinema cinema = cinemas.get(0); 
 
-		FilmShow show = new FilmShow(cinema, film, beginning, calculateEndDate(beginning, film.getLengthMin()));
+		FilmShow show = new FilmShow(cinema, film, beginning, calculateEndDate(beginning, film.getLengthMin()), new BigDecimal("20"));
 		
-    	Set <SeatForShow> seatForShowSet = new LinkedHashSet<>();
-    	
-    	for (Seat seat: cinema.getAllSeats()){
-			SeatForShow seatForShow = new SeatForShow(seat, show);
+    	for (SeatForShow seatForShow: show.getSeatsForShow()){
     		seatForShow.setPrice( new BigDecimal("20").multiply(new BigDecimal(Math.random())));
-    		seatForShowSet.add(seatForShow);
     	}
     	
-    	show.setSeatsForShow(seatForShowSet);
-		
     	return show;
 	}
 	

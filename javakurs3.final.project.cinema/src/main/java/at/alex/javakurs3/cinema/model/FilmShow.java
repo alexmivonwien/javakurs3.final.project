@@ -1,5 +1,6 @@
 package at.alex.javakurs3.cinema.model;
 
+import java.math.BigDecimal;
 import java.sql.Date;
 import java.util.LinkedHashSet;
 import java.util.Set;
@@ -29,7 +30,7 @@ public class FilmShow {
 	@JoinColumn(name = "film_id", nullable=false)
 	@ManyToOne( optional = false )
 	private Film film;
-	private Date begining;
+	private Date beginning;
 	private Date end;
 	
 	@JoinColumn(name = "cinema_id", nullable=false)
@@ -39,23 +40,27 @@ public class FilmShow {
 	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, targetEntity = SeatForShow.class, mappedBy = "filmShow")
 	private Set<SeatForShow> seatsForShow;
 	
-	public FilmShow(Cinema cinema, Film film, Date begining, Date end) {
+	public FilmShow(){
+		
+	}
+	
+	public FilmShow(Cinema cinema, Film film, Date beginning, Date end, BigDecimal minimumPrice) {
 		this.cinema = cinema;
 		this.film = film;
-		this.begining = begining;
+		this.beginning = beginning;
 		this.end = end;
 		seatsForShow = new LinkedHashSet<SeatForShow>();
 
 		for (Seat seat : cinema.getAllSeats()) {
 			SeatForShow seatForShow = new SeatForShow(seat, this);
+			seatForShow.setPrice(minimumPrice);
 			seatsForShow.add(seatForShow);
-			seatForShow.setFilmShow(this);
 		}
 	}
 
 	@Override
 	public String toString() {
-		return "FilmShow: cinema = " + cinema.getName() + "; film = " + film.getName() + "; beginning = " + this.begining;
+		return "FilmShow: cinema = " + cinema.getName() + "; film = " + film.getName() + "; beginning = " + this.beginning;
 	}
 
 	public int getId() {
@@ -72,11 +77,11 @@ public class FilmShow {
 		this.film = film;
 	}
 	
-	public Date getBegining() {
-		return begining;
+	public Date getBeginning() {
+		return beginning;
 	}
-	public void setBegining(Date begining) {
-		this.begining = begining;
+	public void setBeginning(Date beginning) {
+		this.beginning = beginning;
 	}
 	public Date getEnd() {
 		return end;

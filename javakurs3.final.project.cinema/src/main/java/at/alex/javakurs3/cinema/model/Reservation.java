@@ -39,7 +39,9 @@ public class Reservation {
 	
 	private BigDecimal totalPrice =  BigDecimal.ZERO;
 	
-	
+	public Reservation(){
+		
+	}
 	public Reservation(Customer customer, FilmShow filmShow, Set<SeatForShow> seatsReserved){
 		this.customer = customer;
 		this.filmShow = filmShow;

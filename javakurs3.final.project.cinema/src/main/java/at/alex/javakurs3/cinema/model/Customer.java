@@ -12,6 +12,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -26,12 +27,17 @@ public class Customer {
 	private String email;
 	
 	private Date birthDate;
+	
+	@OneToOne
 	private Address adress;
 	
 	
 	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, targetEntity = Reservation.class, mappedBy = "customer")
 	private Set <Reservation> reservations = new HashSet <>();
 	
+	public Customer(){
+		
+	}
 	
 	public Customer(String name, String nachname, String email){
 		this.nachname = nachname;
