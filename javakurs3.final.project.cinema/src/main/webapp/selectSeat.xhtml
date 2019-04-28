@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:c="http://java.sun.com/jsp/jstl/core">
+<h:head>
+</h:head>
+<h:body>
+	<h:form>
+	    <p:dataTable value="#{cinemaSeatViewBean.seatsForShowList}" var="seatForShow">
+		<p:columns value="#{dataTableView.dataTableColumns}" var="column" sortBy="#{seatForShow[column.property]}">
+		     <f:facet name="header">
+		         <h:outputText value="#{column.header}" />
+		     </f:facet>
+		         <h:outputText value="#{seatForShow[column.property]}" />				       
+		</p:columns>
+	    </p:dataTable>
+	</h:form>
+</h:body>
+</html>

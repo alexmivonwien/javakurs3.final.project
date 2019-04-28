@@ -8,6 +8,7 @@ import javax.ejb.TransactionAttribute;
 import javax.ejb.TransactionAttributeType;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Expression;
@@ -31,6 +32,7 @@ public class FilmService {
 	//
 	// }
 
+	@TransactionAttribute(TransactionAttributeType.SUPPORTS) 
 	public List<FilmShow> findFilmShows(String filmName) {
 
 		CriteriaBuilder cb = em.getCriteriaBuilder();
@@ -49,10 +51,23 @@ public class FilmService {
 	}
 
 	@TransactionAttribute(TransactionAttributeType.REQUIRED) 
+	public FilmShow loadComplete (FilmShow lazyLoadedFilmShow){
+		Query query = this.em.createQuery(" from FilmShow fs where fs.id  = :nn");
+		
+		query.setParameter("nn", lazyLoadedFilmShow.getId());
+		List<FilmShow> filmShows = query.getResultList();
+    	FilmShow filmShow = filmShows.get(0); 
+    	
+    	filmShow.getSeatsForShow().size();
+		return filmShow;
+	}
+	
+	
+	@TransactionAttribute(TransactionAttributeType.REQUIRED) 
 	public void createEntitites() {
 
-		Film film1 = Action.createFilm("Star Wars", (short) 1978, (byte) 120);
-		Film film2 = Action.createFilm("Empire strikes back", (short) 1979, (byte) 121);
+		Film film1 = Action.createFilm("Star Wars", "George Lucas", (short) 1978, (byte) 120);
+		Film film2 = Action.createFilm("Empire strikes back", "George Lucas", (short) 1979, (byte) 121);
 
 		em.persist(film1);
 		em.persist(film2);

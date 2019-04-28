@@ -46,6 +46,7 @@ public class SeatForShow implements Seatable {
 		}
 	}
 
+	
 	public BigDecimal getPrice() {
 		return price;
 	}

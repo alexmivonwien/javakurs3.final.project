@@ -1,14 +1,11 @@
 package at.alex.javakurs3.cinema.web;
 
-import java.text.DateFormat;
 
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
 
@@ -16,8 +13,8 @@ import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
+import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
-import javax.faces.event.ActionEvent;
 import javax.inject.Inject;
 
 import org.apache.commons.lang3.StringUtils;
@@ -36,6 +33,8 @@ import at.alex.javakurs3.cinema.service.FilmService;
 @ManagedBean
 @ViewScoped
 public class FilmAndCinemaChooserBean {
+	
+	public static final String SELECTED_FILM_SHOW = "selectedFilmShow";
 
 	@Inject
 	private FilmService filmService;
@@ -189,6 +188,34 @@ public class FilmAndCinemaChooserBean {
 			
 			return null;
 		}
+		
+		FilmShow selectedFilmShow = null;
+		for (FilmShow filmShow: this.futureFilmShows){
+			
+			if (filmShow.getCinema().getId() == this.selectedCinema
+				&& filmShow.getFilm().getId() == this.selectedFilm
+				&& filmShow.getBeginning().equals(this.selectedDate)
+					){
+				selectedFilmShow = filmShow;
+				break;
+			}
+			
+		}
+		
+		if (selectedFilmShow == null){
+			FacesContext.getCurrentInstance().addMessage(
+					null,
+					new FacesMessage(FacesMessage.SEVERITY_ERROR, "No film show found for the selection!",
+							null));
+			
+			return null;
+		}
+		
+		selectedFilmShow = this.filmService.loadComplete(selectedFilmShow);
+		
+		ExternalContext extCtx = FacesContext.getCurrentInstance()
+				.getExternalContext();
+		extCtx.getFlash().put(SELECTED_FILM_SHOW, selectedFilmShow);
 		
 		return "selectSeat?faces-redirect=true";
 	}

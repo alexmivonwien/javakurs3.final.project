@@ -54,9 +54,10 @@ public class Action {
     	return cinema;
 	}
 	
-	public static Film createFilm(String name, short year, byte lengthMin) {
+	public static Film createFilm(String name, String director, short year, byte lengthMin) {
     	Film film2 = new Film();
     	film2.setName(name);
+    	film2.setDirector(director);
     	film2.setLengthMin(lengthMin);
     	film2.setYear(year);
 		

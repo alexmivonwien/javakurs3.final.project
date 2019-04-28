@@ -55,7 +55,31 @@ public class Film {
 	}
 	
 	@Override
+	public boolean equals(Object another) {
+
+		if (another == null || !(another instanceof Film))
+			return false;
+		
+		Film anotherFilm = (Film)another;
+		
+		return this.name.equals(anotherFilm.name)
+				&& this.director.equals(anotherFilm.director)
+				&& this.year == anotherFilm.getYear()
+				&& this.lengthMin == anotherFilm.lengthMin;
+
+	}
+
+	@Override
+	public int hashCode() {
+		return this.name.hashCode() ^ this.director.hashCode() ^ this.year ^ this.lengthMin;
+	}
+	
+	
+	@Override
 	public String toString(){
 		return this.name + ", " + this.year + (this.getDirector() !=null ? ", " + this.getDirector() : StringUtils.EMPTY);
 	}
+	
+	
+	
 }
