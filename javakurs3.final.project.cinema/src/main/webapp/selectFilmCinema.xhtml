@@ -16,7 +16,11 @@
 		    var dateValues = document.getElementById(&apos;cinemaFilmFormId:hiddenFieldId&apos;);
 		    var dates = dateValues.value.split(',');
 		    for (var i = 0; i &lt; dates.length; i++) {
-		        if (date.getDate() == new Date(dates[i]).getDate()) {
+		    	var dateI = new Date(dates[i]);
+		        if (date.getDate() == dateI.getDate() 
+		        		&#x26;&#x26; date.getMonth() == dateI.getMonth()
+		        		&#x26;&#x26; date.getFullYear() == dateI.getFullYear()
+				        ) {
 		           cssclass = &apos;dateavailable&apos;;
 				   return [true];
 		        }
@@ -24,13 +28,7 @@
 		    return [false];
 		}
 
-
-	  function invokeUpdateAvailableDates() {
-	     var jsfCommandLink = document.getElementById("cinemaFilmFormId:updateAvailableDatesId");
-	     jsfCommandLink.click();
-	  }
-		
-     </script>
+		</script>
   	 <h:form id="cinemaFilmFormId">
   	 
   		 <!-- @see https://www.theserverside.com/tutorial/How-to-invoke-a-JSF-managed-bean-asynchronously-through-JavaScript -->
@@ -61,6 +59,10 @@
         		<p:calendar id="calendarId" beforeShowDay="highlightDays" value="#{filmAndCinemaChooserBean.selectedDate}" effect="fold" />
 		        
 	  		</h:panelGrid>
+	  			<p:commandButton id="viewAssignmentHistory" process="cinemaFilmFormId" 
+							icon="ui-icon-search" value="Next"
+							action="#{filmAndCinemaChooserBean.next}" ajax="false"/>
+	  		
   		</p:panel>
 	</h:form>
 </h:body>

@@ -1,6 +1,7 @@
 package at.alex.javakurs3.cinema.web;
 
 import java.text.DateFormat;
+
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -12,15 +13,15 @@ import java.util.Map;
 import java.util.Set;
 
 import javax.annotation.PostConstruct;
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
+import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
 import javax.inject.Inject;
 
 import org.apache.commons.lang3.StringUtils;
 
-import at.alex.javakurs3.cinema.model.Cinema;
-import at.alex.javakurs3.cinema.model.Film;
 import at.alex.javakurs3.cinema.model.FilmShow;
 import at.alex.javakurs3.cinema.service.FilmService;
 
@@ -74,7 +75,9 @@ public class FilmAndCinemaChooserBean {
 		}
 	}
 	
-	
+	public void setAvailableDatesAsString(String datesAsString){
+		
+	}
 	public String getAvailableDatesAsString() {
 		if (availableDates.size() == 0) {
 			return "";
@@ -156,6 +159,38 @@ public class FilmAndCinemaChooserBean {
 
 		updateAvailableDates();
 		return availableFilms;
+	}
+	
+	public String next(){
+		if (this.selectedCinema<=0 ){
+			
+			FacesContext.getCurrentInstance().addMessage(
+					null,
+					new FacesMessage(FacesMessage.SEVERITY_ERROR, "Select a cinema!",
+							null));
+			return null;
+		}
+		
+		if (this.selectedFilm <=0){
+			
+			FacesContext.getCurrentInstance().addMessage(
+					null,
+					new FacesMessage(FacesMessage.SEVERITY_ERROR, "Select a film!",
+							null));
+			
+			return null;
+		}
+		
+		if (this.selectedDate == null){
+			FacesContext.getCurrentInstance().addMessage(
+					null,
+					new FacesMessage(FacesMessage.SEVERITY_ERROR, "Select a date!",
+							null));
+			
+			return null;
+		}
+		
+		return "selectSeat?faces-redirect=true";
 	}
 
 }
