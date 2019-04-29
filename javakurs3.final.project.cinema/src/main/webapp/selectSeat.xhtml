@@ -8,14 +8,15 @@
 <h:head>
 </h:head>
 <h:body>
-	<h:form>
-	    <p:dataTable value="#{cinemaSeatViewBean.seatsForShowList}" var="seatForShow">
-		<p:columns value="#{dataTableView.dataTableColumns}" var="column" sortBy="#{seatForShow[column.property]}">
-		     <f:facet name="header">
-		         <h:outputText value="#{column.header}" />
-		     </f:facet>
-		         <h:outputText value="#{seatForShow[column.property]}" />				       
-		</p:columns>
+	<h:form id="seatsFormId">
+		<p:inputText id = "inputTextId" value = "#{cinemaSeatViewBean.remark}" />
+	    <p:dataTable id="seatsTableId" value="#{cinemaSeatViewBean.seatsForShowList}" var="seatForShow">
+			<p:columns value="#{cinemaSeatViewBean.dataTableColumns}" var="column" sortBy="#{seatForShow[column.property]}">
+			     <f:facet name="header">
+			         <h:outputText value="#{column.header}" />
+			     </f:facet>
+			     <h:outputText value="#{seatForShow[column.property]}" />				       
+			</p:columns>
 	    </p:dataTable>
 	</h:form>
 </h:body>

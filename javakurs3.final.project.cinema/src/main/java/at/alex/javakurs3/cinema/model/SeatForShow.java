@@ -120,4 +120,9 @@ public class SeatForShow implements Seatable {
 		return this.seatNo - seat.getSeatNo();
 	}
 	
+	@Override
+	public String toString(){
+		return "Row No: " + this.rowNo + ", Seat No: " + this.seatNo + ", filmShowId= " + this.filmShow.getId();
+	}
+	
 }

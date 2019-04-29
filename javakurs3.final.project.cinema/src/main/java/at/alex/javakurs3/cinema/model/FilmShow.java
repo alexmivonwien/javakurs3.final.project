@@ -136,9 +136,9 @@ public class FilmShow {
 			
 			if (seatForShow.getRowNo() == (1)){
 				noColumns ++;
+			} else {
+				break;
 			}
-			
-			break;
 		}
 		
 		return noColumns;

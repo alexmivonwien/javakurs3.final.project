@@ -1,6 +1,7 @@
 package at.alex.javakurs3.cinema.web;
 
 
+import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
@@ -32,7 +33,7 @@ import at.alex.javakurs3.cinema.service.FilmService;
  */
 @ManagedBean
 @ViewScoped
-public class FilmAndCinemaChooserBean {
+public class FilmAndCinemaChooserBean implements Serializable {
 	
 	public static final String SELECTED_FILM_SHOW = "selectedFilmShow";
 

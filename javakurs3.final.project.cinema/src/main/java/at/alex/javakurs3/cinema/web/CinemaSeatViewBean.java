@@ -27,11 +27,13 @@ import at.alex.javakurs3.cinema.web.momdel.DataTableColumn;
 public class CinemaSeatViewBean implements Serializable {
 
 	private static final long serialVersionUID = 1L;
-
+	
 	
 	private List<SeatForShow> seatsForShowList = new ArrayList<SeatForShow>();
 	private List<DataTableColumn> dataTableColumns = new ArrayList<DataTableColumn>();
 
+	private String remark = "Hello World";
+	
 	@PostConstruct
 	public void init() {
 		// add SeatForShows
@@ -48,7 +50,21 @@ public class CinemaSeatViewBean implements Serializable {
 			dataTableColumns.add(new DataTableColumn("Seat " + (i+1), "seatNo"));
 		}
 		
+		for ( SeatForShow seatForShow: selectedFilmShow.getSeatsForShow()){
+			seatsForShowList.add(seatForShow);
+		}
 	}
+
+	
+	public String getRemark() {
+		return remark;
+	}
+
+
+	public void setRemark(String remark) {
+		this.remark = remark;
+	}
+
 
 	public void setDataTableColumns(List<DataTableColumn> dataTableColumns) {
 		this.dataTableColumns = dataTableColumns;
@@ -61,6 +77,29 @@ public class CinemaSeatViewBean implements Serializable {
 	public List<SeatForShow> getSeatsForShowList() {
 		return seatsForShowList;
 	}
+	
+//   public void updateColumns() {
+//	    //reset table state
+//	    UIComponent table = FacesContext.getCurrentInstance().getViewRoot().findComponent(":seatsFormId:seatsTableId");
+//	    table.setValueExpression("sortBy", null);
+//	     
+//	    //update columns
+//	    createDynamicColumns();
+//    }
+//   
+//   private void createDynamicColumns() {
+//       String[] columnKeys = columnTemplate.split(" ");
+//       columns = new ArrayList<ColumnModel>();   
+//        
+//       for(String columnKey : columnKeys) {
+//           String key = columnKey.trim();
+//            
+//           if(VALID_COLUMN_KEYS.contains(key)) {
+//               columns.add(new DataTableColumn(columnKey.toUpperCase(), columnKey));
+//           }
+//       }
+//   }
+   
 
 	public void setSeatsForShowList(List<SeatForShow> seatsForShowList) {
 		this.seatsForShowList = seatsForShowList;
