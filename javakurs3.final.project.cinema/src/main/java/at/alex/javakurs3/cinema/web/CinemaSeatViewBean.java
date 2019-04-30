@@ -11,6 +11,8 @@ import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.faces.context.Flash;
 
+import org.apache.commons.lang3.StringUtils;
+
 import at.alex.javakurs3.cinema.model.FilmShow;
 import at.alex.javakurs3.cinema.model.SeatForShow;
 import at.alex.javakurs3.cinema.web.momdel.DataTableColumn;
@@ -41,7 +43,7 @@ public class CinemaSeatViewBean implements Serializable {
 				.getExternalContext();
 
 		Flash flash = extContext.getFlash();
-		FilmShow selectedFilmShow = (FilmShow)flash.get(FilmAndCinemaChooserBean.SELECTED_FILM_SHOW);
+		FilmShow selectedFilmShow = (FilmShow)flash.get(FilmAndCinemaChooserBean.SELECTED_FILM_SHOW + StringUtils.EMPTY);
 		
 		int noOfColumns = selectedFilmShow.getNumberOfColumns();
 		

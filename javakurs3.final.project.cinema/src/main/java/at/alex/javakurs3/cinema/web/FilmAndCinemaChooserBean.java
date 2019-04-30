@@ -67,8 +67,8 @@ public class FilmAndCinemaChooserBean implements Serializable {
 			int filmShowCinemaId = filmShow.getCinema().getId();
 			int filmShowFilmId = filmShow.getFilm().getId();
 			
-			if ( 	(this.selectedFilm == -1 || this.selectedFilm == filmShowFilmId) 
-				 && (this.selectedCinema == -1 || this.selectedCinema == filmShowCinemaId)
+			if ( 	(this.selectedFilm <=   0 || this.selectedFilm == filmShowFilmId) 
+				 && (this.selectedCinema <= 0 || this.selectedCinema == filmShowCinemaId)
 					){
 				availableDates.add(filmShow.getBeginning());
 			}

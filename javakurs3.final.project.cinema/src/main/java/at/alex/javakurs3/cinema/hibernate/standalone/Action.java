@@ -47,6 +47,27 @@ public class Action {
 	    	seat3.setSeatNo((byte)3);
 	    	seat3.setCinema(cinema);
 	    	seatSet.add(seat3);
+	    	
+	    	
+	       	Seat seat4 = new Seat();
+	    	seat4.setRowNo((byte)2);
+	    	seat4.setSeatNo((byte)1);
+	    	seat4.setCinema(cinema);
+	    	seatSet.add(seat4);
+	    	
+	    	
+	       	Seat seat5 = new Seat();
+	    	seat5.setRowNo((byte)2);
+	    	seat5.setSeatNo((byte)2);
+	    	seat5.setCinema(cinema);
+	    	seatSet.add(seat5);
+	    	
+	       	Seat seat6 = new Seat();
+	    	seat6.setRowNo((byte)2);
+	    	seat6.setSeatNo((byte)3);
+	    	seat6.setCinema(cinema);
+	    	seatSet.add(seat6);
+	    	
     	}
         
     	cinema.setAllSeats(seatSet);

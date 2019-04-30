@@ -43,6 +43,7 @@ public class FilmShow {
 	private Set<SeatForShow> seatsForShow;
 
 	public FilmShow() {
+		this.seatsForShow = new TreeSet <>();
 
 	}
 
@@ -120,7 +121,7 @@ public class FilmShow {
 	}
 
 	public void setSeatsForShow(Set<SeatForShow> seatsForShow) {
-		this.seatsForShow = seatsForShow;
+		this.seatsForShow.addAll(seatsForShow);
 	}
 	
 	/**
@@ -133,12 +134,9 @@ public class FilmShow {
 		int noColumns = 0;
 		
 		for (SeatForShow seatForShow : this.getSeatsForShow()){
-			
 			if (seatForShow.getRowNo() == (1)){
 				noColumns ++;
-			} else {
-				break;
-			}
+			} 
 		}
 		
 		return noColumns;
