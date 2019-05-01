@@ -12,10 +12,12 @@ import javax.faces.bean.ViewScoped;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.faces.context.Flash;
+import javax.faces.event.ActionEvent;
 
 import org.apache.commons.lang3.StringUtils;
 
 import at.alex.javakurs3.cinema.model.FilmShow;
+import at.alex.javakurs3.cinema.model.Reservation;
 import at.alex.javakurs3.cinema.model.SeatForShow;
 
 /**
@@ -33,6 +35,7 @@ public class CinemaSeatViewBean implements Serializable {
 	
 	private List<SeatForShow> seatsForShowList = new ArrayList<SeatForShow>();
 	private int noOfColumns;
+	private FilmShow selectedFilmShow;
 	
 	@PostConstruct
 	public void init() {
@@ -41,7 +44,7 @@ public class CinemaSeatViewBean implements Serializable {
 				.getExternalContext();
 
 		Flash flash = extContext.getFlash();
-		FilmShow selectedFilmShow = (FilmShow)flash.get(FilmAndCinemaChooserBean.SELECTED_FILM_SHOW + StringUtils.EMPTY);
+		this.selectedFilmShow = (FilmShow)flash.get(FilmAndCinemaChooserBean.SELECTED_FILM_SHOW + StringUtils.EMPTY);
 		
 		this.noOfColumns = selectedFilmShow.getNumberOfColumns();
 		
@@ -53,7 +56,20 @@ public class CinemaSeatViewBean implements Serializable {
 		
 	}
 
+	public void reserveSeat(SeatForShow seatForShow){
+		
+		Reservation reservation = new Reservation();
+		reservation.setCustomer(null);
+		reservation.setFilmShow(this.selectedFilmShow);
+		reservation.getSeatsReserved().add(seatForShow);
+		seatForShow.setReservation(reservation);
+	}
 
+	public void seatSelected (ActionEvent e){
+		Object obj = e.getSource();
+		System.out.println(obj);
+	}
+	
 	public int getNoOfColumns() {
 		return noOfColumns;
 	}

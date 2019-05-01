@@ -2,6 +2,7 @@ package at.alex.javakurs3.cinema.model;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+import java.util.HashSet;
 import java.util.Set;
 
 import javax.persistence.Access;
@@ -35,7 +36,7 @@ public class Reservation {
 	private FilmShow filmShow;
 	
 	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, targetEntity = SeatForShow.class, mappedBy = "reservation")
-	private Set<SeatForShow> seatsReserved;
+	private Set<SeatForShow> seatsReserved = new HashSet<>();
 	
 	private BigDecimal totalPrice =  BigDecimal.ZERO;
 	

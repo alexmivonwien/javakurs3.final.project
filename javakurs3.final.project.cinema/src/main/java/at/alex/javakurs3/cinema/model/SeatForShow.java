@@ -11,6 +11,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 @Entity
 @Table(name = "seatforshow")
@@ -22,6 +23,9 @@ public class SeatForShow implements Comparable <SeatForShow>, Seatable {
 	private int id;
 	private byte rowNo;
 	private byte seatNo;
+	
+	@Transient
+	private String color;
 
 	private BigDecimal price;
 	
@@ -45,8 +49,11 @@ public class SeatForShow implements Comparable <SeatForShow>, Seatable {
 			throw new IllegalArgumentException(" The seat " + seat.toString() + " does not belong to the filmShow " + filmShow);
 		}
 	}
-
 	
+	public String getColor() {
+		return this.getReservation() == null ? "green" : "red";
+	}
+
 	public BigDecimal getPrice() {
 		return price;
 	}

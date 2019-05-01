@@ -13,8 +13,11 @@
 	        rows="#{cinemaSeatViewBean.noOfSeatsInShow}" paginator="false" id="seatForShowId">
 	 
 	        <p:panel header="#{seatForShow.header}" style="text-align:center">
-	            <h:panelGrid columns="1" style="width:100%">
-	                <h:outputText value="#{seatForShow.header}" />
+
+	            <h:panelGrid columns="1" id="panelGridId" style="#{seatForShow.color};width:100%">
+		            <p:commandLink update=":seatsFormId" actionListener="#{cinemaSeatViewBean.seatSelected}">
+	                    <h:outputText value="#{seatForShow.header}" />
+	                </p:commandLink>
 	            </h:panelGrid>
 	        </p:panel>
 	 
