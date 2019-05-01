@@ -1,6 +1,6 @@
 package at.alex.javakurs3.cinema.model;
 
-public interface Seatable extends Comparable<Seatable> {
+public interface Seatable {
 
 	public byte getRowNo();
 

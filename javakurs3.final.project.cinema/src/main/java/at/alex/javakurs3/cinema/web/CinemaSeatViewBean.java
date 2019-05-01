@@ -1,7 +1,9 @@
 package at.alex.javakurs3.cinema.web;
 
 import java.io.Serializable;
+
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
@@ -15,7 +17,6 @@ import org.apache.commons.lang3.StringUtils;
 
 import at.alex.javakurs3.cinema.model.FilmShow;
 import at.alex.javakurs3.cinema.model.SeatForShow;
-import at.alex.javakurs3.cinema.web.momdel.DataTableColumn;
 
 /**
  * 
@@ -30,11 +31,8 @@ public class CinemaSeatViewBean implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 	
-	
 	private List<SeatForShow> seatsForShowList = new ArrayList<SeatForShow>();
-	private List<DataTableColumn> dataTableColumns = new ArrayList<DataTableColumn>();
-
-	private String remark = "Hello World";
+	private int noOfColumns;
 	
 	@PostConstruct
 	public void init() {
@@ -45,63 +43,28 @@ public class CinemaSeatViewBean implements Serializable {
 		Flash flash = extContext.getFlash();
 		FilmShow selectedFilmShow = (FilmShow)flash.get(FilmAndCinemaChooserBean.SELECTED_FILM_SHOW + StringUtils.EMPTY);
 		
-		int noOfColumns = selectedFilmShow.getNumberOfColumns();
-		
-		for (int i = 0; i < noOfColumns; i ++){
-			// prepare dynamic columns
-			dataTableColumns.add(new DataTableColumn("Seat " + (i+1), "seatNo"));
-		}
+		this.noOfColumns = selectedFilmShow.getNumberOfColumns();
 		
 		for ( SeatForShow seatForShow: selectedFilmShow.getSeatsForShow()){
 			seatsForShowList.add(seatForShow);
 		}
-	}
-
-	
-	public String getRemark() {
-		return remark;
-	}
-
-
-	public void setRemark(String remark) {
-		this.remark = remark;
+		
+		Collections.sort(seatsForShowList);
+		
 	}
 
 
-	public void setDataTableColumns(List<DataTableColumn> dataTableColumns) {
-		this.dataTableColumns = dataTableColumns;
+	public int getNoOfColumns() {
+		return noOfColumns;
 	}
 
-	public List<DataTableColumn> getDataTableColumns() {
-		return dataTableColumns;
+	public int getNoOfSeatsInShow() {
+		return this.seatsForShowList.size();
 	}
 
 	public List<SeatForShow> getSeatsForShowList() {
 		return seatsForShowList;
 	}
-	
-//   public void updateColumns() {
-//	    //reset table state
-//	    UIComponent table = FacesContext.getCurrentInstance().getViewRoot().findComponent(":seatsFormId:seatsTableId");
-//	    table.setValueExpression("sortBy", null);
-//	     
-//	    //update columns
-//	    createDynamicColumns();
-//    }
-//   
-//   private void createDynamicColumns() {
-//       String[] columnKeys = columnTemplate.split(" ");
-//       columns = new ArrayList<ColumnModel>();   
-//        
-//       for(String columnKey : columnKeys) {
-//           String key = columnKey.trim();
-//            
-//           if(VALID_COLUMN_KEYS.contains(key)) {
-//               columns.add(new DataTableColumn(columnKey.toUpperCase(), columnKey));
-//           }
-//       }
-//   }
-   
 
 	public void setSeatsForShowList(List<SeatForShow> seatsForShowList) {
 		this.seatsForShowList = seatsForShowList;

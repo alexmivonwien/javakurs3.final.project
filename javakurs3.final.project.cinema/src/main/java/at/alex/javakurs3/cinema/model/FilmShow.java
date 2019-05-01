@@ -141,7 +141,7 @@ public class FilmShow {
 		
 		return noColumns;
 	}
-
+	
 	@Override
 	public boolean equals(Object another) {
 

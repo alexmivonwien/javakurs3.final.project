@@ -9,15 +9,16 @@
 </h:head>
 <h:body>
 	<h:form id="seatsFormId">
-		<p:inputText id = "inputTextId" value = "#{cinemaSeatViewBean.remark}" />
-	    <p:dataTable id="seatsTableId" value="#{cinemaSeatViewBean.seatsForShowList}" var="seatForShow">
-			<p:columns value="#{cinemaSeatViewBean.dataTableColumns}" var="column" sortBy="#{seatForShow[column.property]}">
-			     <f:facet name="header">
-			         <h:outputText value="#{column.header}" />
-			     </f:facet>
-			     <h:outputText value="#{seatForShow[column.property]}" />				       
-			</p:columns>
-	    </p:dataTable>
+	    <p:dataGrid var="seatForShow" value="#{cinemaSeatViewBean.seatsForShowList}" columns="#{cinemaSeatViewBean.noOfColumns}" layout="grid"
+	        rows="#{cinemaSeatViewBean.noOfSeatsInShow}" paginator="false" id="seatForShowId">
+	 
+	        <p:panel header="#{seatForShow.header}" style="text-align:center">
+	            <h:panelGrid columns="1" style="width:100%">
+	                <h:outputText value="#{seatForShow.header}" />
+	            </h:panelGrid>
+	        </p:panel>
+	 
+	    </p:dataGrid>
 	</h:form>
 </h:body>
 </html>

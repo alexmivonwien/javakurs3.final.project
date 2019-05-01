@@ -13,7 +13,7 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "seat")
 @Access(AccessType.FIELD)
-public class Seat implements Seatable {
+public class Seat implements Comparable <Seat>, Seatable {
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
@@ -67,7 +67,7 @@ public class Seat implements Seatable {
 	}
 
 	@Override
-	public int compareTo(Seatable seat) {
+	public int compareTo(Seat seat) {
 		int diff = this.rowNo - seat.getRowNo();
 		
 		if (diff != 0){
