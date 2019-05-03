@@ -27,8 +27,8 @@ public class Reservation {
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	private int id;
 	
-	@JoinColumn(name = "customer_id", nullable=false)
-	@ManyToOne( optional = false )
+	@JoinColumn(name = "customer_id", nullable=true)
+	@ManyToOne( optional = true )
 	private Customer customer;
 	
 	@JoinColumn(name = "filmshow_id", nullable=false)

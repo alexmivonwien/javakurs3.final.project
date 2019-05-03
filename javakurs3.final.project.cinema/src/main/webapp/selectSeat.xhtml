@@ -4,7 +4,6 @@
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:p="http://primefaces.org/ui"
-	xmlns:pe="http://primefaces.org/ui/extensions"
 	xmlns:c="http://java.sun.com/jsp/jstl/core">
 <h:head>
 </h:head>
@@ -13,10 +12,9 @@
 	    <p:dataGrid var="seatForShow" value="#{cinemaSeatViewBean.seatsForShowList}" columns="#{cinemaSeatViewBean.noOfColumns}" layout="grid"
 	        rows="#{cinemaSeatViewBean.noOfSeatsInShow}" paginator="false" id="seatForShowId">
 
-	        <h:commandLink action="#{cinemaSeatViewBean.reserveSeat(seatForShow.header)}" value="">	 
-		        <p:panel header="#{seatForShow.header}" style="text-align:center"/>
-	        </h:commandLink>
-	 
+	        <p:commandLink action="#{cinemaSeatViewBean.reserveSeat(seatForShow.header)}" update="@parent">	 
+		        <p:panel header="#{seatForShow.header}" id="seatForShowPanelId" style="text-align:center;background-color:#{seatForShow.color}"/>
+	        </p:commandLink>
 	    </p:dataGrid>
 	</h:form>
 </h:body>

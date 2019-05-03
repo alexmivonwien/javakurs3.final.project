@@ -14,12 +14,14 @@ import javax.faces.context.FacesContext;
 import javax.faces.context.Flash;
 import javax.faces.event.ActionEvent;
 import javax.faces.event.AjaxBehaviorEvent;
+import javax.inject.Inject;
 
 import org.apache.commons.lang3.StringUtils;
 
 import at.alex.javakurs3.cinema.model.FilmShow;
 import at.alex.javakurs3.cinema.model.Reservation;
 import at.alex.javakurs3.cinema.model.SeatForShow;
+import at.alex.javakurs3.cinema.service.ReservationService;
 
 /**
  * 
@@ -37,6 +39,9 @@ public class CinemaSeatViewBean implements Serializable {
 	private List<SeatForShow> seatsForShowList = new ArrayList<SeatForShow>();
 	private int noOfColumns;
 	private FilmShow selectedFilmShow;
+	
+	@Inject
+	private ReservationService reservationService;
 	
 	@PostConstruct
 	public void init() {
@@ -58,19 +63,28 @@ public class CinemaSeatViewBean implements Serializable {
 	}
 
 	public void reserveSeat(String seatReserved){
-		System.out.println(seatReserved);
-//		Reservation reservation = new Reservation();
-//		reservation.setCustomer(null);
-//		reservation.setFilmShow(this.selectedFilmShow);
-//		reservation.getSeatsReserved().add(seatForShow);
-//		seatForShow.setReservation(reservation);
+		
+		byte rowNo = Byte.parseByte(seatReserved.substring(0, seatReserved.indexOf('/')));
+		byte seatNo = Byte.parseByte(seatReserved.substring(seatReserved.indexOf('/') + 1));
+		
+		SeatForShow selectedSeatForShow = null;
+		for (SeatForShow seatForShow : seatsForShowList) {
+			if (seatForShow.getRowNo() == rowNo && seatForShow.getSeatNo() == seatNo) {
+				selectedSeatForShow = seatForShow;
+				break;
+			}
+		}
+		
+		Reservation reservation = new Reservation();
+		reservation.setCustomer(null);
+		reservation.setFilmShow(selectedFilmShow);
+		reservation.setTotalPrice(selectedSeatForShow.getPrice());
+		selectedSeatForShow.setReservation(reservation);
+		
+		//this.reservationService.createReservation(customer, filmShow, seats);
+		//System.out.println(seatReserved);
 	}
 
-	public void seatSelected (AjaxBehaviorEvent e){
-		Object obj = e.getSource();
-		System.out.println(obj);
-	}
-	
 	public int getNoOfColumns() {
 		return noOfColumns;
 	}
