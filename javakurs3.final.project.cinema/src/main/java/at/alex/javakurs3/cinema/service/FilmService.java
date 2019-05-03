@@ -78,10 +78,10 @@ public class FilmService {
 		em.persist(cinema1);
 		em.persist(cinema2);
 		
-		FilmShow show = Action.createFilmShow(em, "Star wars", "Cinaplex InnereStadt", new Date(new java.util.Date().getTime()));
+		FilmShow show = Action.createFilmShow(em, "Star Wars", "Cinaplex InnereStadt", new Date(new java.util.Date().getTime()));
 		em.persist(show);
 
-		FilmShow show2 = Action.createFilmShow(em, "Star wars", "Cinaplex Donaustadt", new Date(new java.util.Date().getTime()));
+		FilmShow show2 = Action.createFilmShow(em, "Star Wars", "Cinaplex Donaustadt", new Date(new java.util.Date().getTime()));
 		em.persist(show2);
 		
 		FilmShow show3 = Action.createFilmShow(em, "Empire strikes back", "Cinaplex Donaustadt", new Date(new java.util.Date().getTime()));

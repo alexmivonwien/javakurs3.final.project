@@ -13,6 +13,7 @@ import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.faces.context.Flash;
 import javax.faces.event.ActionEvent;
+import javax.faces.event.AjaxBehaviorEvent;
 
 import org.apache.commons.lang3.StringUtils;
 
@@ -56,16 +57,16 @@ public class CinemaSeatViewBean implements Serializable {
 		
 	}
 
-	public void reserveSeat(SeatForShow seatForShow){
-		
-		Reservation reservation = new Reservation();
-		reservation.setCustomer(null);
-		reservation.setFilmShow(this.selectedFilmShow);
-		reservation.getSeatsReserved().add(seatForShow);
-		seatForShow.setReservation(reservation);
+	public void reserveSeat(String seatReserved){
+		System.out.println(seatReserved);
+//		Reservation reservation = new Reservation();
+//		reservation.setCustomer(null);
+//		reservation.setFilmShow(this.selectedFilmShow);
+//		reservation.getSeatsReserved().add(seatForShow);
+//		seatForShow.setReservation(reservation);
 	}
 
-	public void seatSelected (ActionEvent e){
+	public void seatSelected (AjaxBehaviorEvent e){
 		Object obj = e.getSource();
 		System.out.println(obj);
 	}
