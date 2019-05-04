@@ -114,7 +114,7 @@ public class SeatForShow implements Comparable <SeatForShow>, Seatable {
 
 	@Override
 	public int hashCode() {
-		return this.rowNo ^ this.seatNo ^ this.filmShow.hashCode();
+		return this.rowNo ^ this.seatNo ^ ( this.filmShow == null ? 0 : this.filmShow.hashCode());
 	}
 
 	@Override

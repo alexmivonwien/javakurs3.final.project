@@ -27,10 +27,11 @@ public class FilmService {
 	@PersistenceContext
 	private EntityManager em;
 
-	// public List <FilmShow> findFilmShows (Film film, Cinema cinema,
-	// LocalDateTime startDate){
-	//
-	// }
+	@TransactionAttribute(TransactionAttributeType.SUPPORTS) 
+	public void updateFilmShow(FilmShow filmShow) {
+		
+		this.em.merge(filmShow);
+	}
 
 	@TransactionAttribute(TransactionAttributeType.SUPPORTS) 
 	public List<FilmShow> findFilmShows(String filmName) {

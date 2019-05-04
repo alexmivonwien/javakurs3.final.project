@@ -21,6 +21,7 @@ import org.apache.commons.lang3.StringUtils;
 import at.alex.javakurs3.cinema.model.FilmShow;
 import at.alex.javakurs3.cinema.model.Reservation;
 import at.alex.javakurs3.cinema.model.SeatForShow;
+import at.alex.javakurs3.cinema.service.FilmService;
 import at.alex.javakurs3.cinema.service.ReservationService;
 
 /**
@@ -39,9 +40,13 @@ public class CinemaSeatViewBean implements Serializable {
 	private List<SeatForShow> seatsForShowList = new ArrayList<SeatForShow>();
 	private int noOfColumns;
 	private FilmShow selectedFilmShow;
+	private Reservation reservationCreated;
 	
 	@Inject
 	private ReservationService reservationService;
+	
+	@Inject
+	private FilmService filmService;
 	
 	@PostConstruct
 	public void init() {
@@ -75,14 +80,16 @@ public class CinemaSeatViewBean implements Serializable {
 			}
 		}
 		
-		Reservation reservation = new Reservation();
-		reservation.setCustomer(null);
-		reservation.setFilmShow(selectedFilmShow);
-		reservation.setTotalPrice(selectedSeatForShow.getPrice());
-		selectedSeatForShow.setReservation(reservation);
+		if (this.reservationCreated == null){
+			this.reservationCreated = new Reservation();
+			this.reservationCreated.setCustomer(null);
+			this.reservationCreated.setFilmShow(selectedFilmShow);
+		} 
 		
-		//this.reservationService.createReservation(customer, filmShow, seats);
-		//System.out.println(seatReserved);
+		selectedSeatForShow.setReservation(this.reservationCreated);
+		this.reservationCreated.setTotalPrice(this.reservationCreated.getTotalPrice().add(selectedSeatForShow.getPrice()));
+		this.reservationCreated.getSeatsReserved().add(selectedSeatForShow);
+		
 	}
 
 	public int getNoOfColumns() {
@@ -99,6 +106,12 @@ public class CinemaSeatViewBean implements Serializable {
 
 	public void setSeatsForShowList(List<SeatForShow> seatsForShowList) {
 		this.seatsForShowList = seatsForShowList;
+	}
+	
+	public String next(){
+		this.reservationService.saveReservation(this.reservationCreated);
+		return "selectFilmCinema?faces-redirect=true";
+		
 	}
 
 }

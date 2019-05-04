@@ -16,6 +16,10 @@
 		        <p:panel header="#{seatForShow.header}" id="seatForShowPanelId" style="text-align:center;background-color:#{seatForShow.color}"/>
 	        </p:commandLink>
 	    </p:dataGrid>
+	    <p:commandButton id="selectSeatButtonNextId" process="seatsFormId" 
+							icon="ui-icon-search" value="Next"
+							action="#{cinemaSeatViewBean.next}" ajax="false"/>
+	    
 	</h:form>
 </h:body>
 </html>
