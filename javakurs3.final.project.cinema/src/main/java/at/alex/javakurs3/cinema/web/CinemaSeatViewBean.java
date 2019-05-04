@@ -45,9 +45,6 @@ public class CinemaSeatViewBean implements Serializable {
 	@Inject
 	private ReservationService reservationService;
 	
-	@Inject
-	private FilmService filmService;
-	
 	@PostConstruct
 	public void init() {
 		// add SeatForShows
