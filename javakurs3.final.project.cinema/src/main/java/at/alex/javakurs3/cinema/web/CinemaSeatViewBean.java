@@ -109,7 +109,9 @@ public class CinemaSeatViewBean implements Serializable {
 	}
 	
 	public String next(){
-		this.reservationService.saveReservation(this.reservationCreated);
+		if (this.reservationCreated!=null){
+			this.reservationService.saveReservation(this.reservationCreated);
+		}
 		return "selectFilmCinema?faces-redirect=true";
 		
 	}
