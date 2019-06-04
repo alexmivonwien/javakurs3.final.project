@@ -2,6 +2,7 @@ package at.alex.javakurs3.cinema.web;
 
 import java.io.Serializable;
 
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -12,27 +13,36 @@ import javax.faces.bean.ViewScoped;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.faces.context.Flash;
-import javax.faces.event.ActionEvent;
-import javax.faces.event.AjaxBehaviorEvent;
 import javax.inject.Inject;
+import javax.inject.Named;
 
 import org.apache.commons.lang3.StringUtils;
 
 import at.alex.javakurs3.cinema.model.FilmShow;
 import at.alex.javakurs3.cinema.model.Reservation;
 import at.alex.javakurs3.cinema.model.SeatForShow;
-import at.alex.javakurs3.cinema.service.FilmService;
 import at.alex.javakurs3.cinema.service.ReservationService;
 
 /**
  * 
- * @author User
- * @see https://www.concretepage.com/jsf-2/primefaces-5/primefaces-5-datatable-with-dynamic-columns-example
+ * @author Alex-Mi
+ * 
+ * As per JSF 2.2 and higher, @ManagedBean is deprecated. Use @Named together with @javax.faces.view.ViewScoped,
+ * @see https://stackoverflow.com/a/4347707/1925356
+ * @see @javax.faces.view.ViewScoped documentation:  
+ * 
+ * When this annotation, along with javax.inject.Named is found on a class, the runtime must place
+ * the bean in a CDI scope such that it remains active as long as javax.faces.application.NavigationHandler.handleNavigation 
+ * does not cause a navigation to a view with a viewId that is different than theview Id of the current view. Any injections and
+ * notifications required by CDI and the Java EE platform must occur as usual at the expected time.
+ * 
  * 
  */
 
-@ManagedBean
-@ViewScoped
+@Named
+@javax.faces.view.ViewScoped
+// javax.faces.bean.ViewScoped is deprecated as per JSF 2.2
+// javax.faces.bean.ManagedBean is deprecated as per JSF 2.2
 public class CinemaSeatViewBean implements Serializable {
 
 	private static final long serialVersionUID = 1L;
