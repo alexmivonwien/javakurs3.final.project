@@ -8,8 +8,6 @@ import java.util.Collections;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
-import javax.faces.bean.ManagedBean;
-import javax.faces.bean.ViewScoped;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.faces.context.Flash;
@@ -26,6 +24,15 @@ import at.alex.javakurs3.cinema.service.ReservationService;
 /**
  * 
  * @author Alex-Mi
+ * 
+ * Unless you're using JSF 2.2 (which is still not out yet at this moment) or
+ * MyFaces CODI (which I'd have expected that you would explicitly mention that)
+ * the @ViewScoped doesn't work in CDI. This also pretty much matches your
+ * problem symptoms.
+ * 
+ * http://stackoverflow.com/questions/14812238/jsf-view-scoped-bean-
+ * reconstructed-multiple-times
+ * 
  * 
  * As per JSF 2.2 and higher, @ManagedBean is deprecated. Use @Named together with @javax.faces.view.ViewScoped,
  * @see https://stackoverflow.com/a/4347707/1925356

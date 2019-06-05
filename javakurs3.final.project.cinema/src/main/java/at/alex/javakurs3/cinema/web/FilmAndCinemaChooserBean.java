@@ -30,6 +30,13 @@ import at.alex.javakurs3.cinema.service.FilmService;
  * @see https://stackoverflow.com/questions/16559559/disable-specific-dates-on-pcalendar
  * @see https://zenidas.wordpress.com/recipes/primefaces-calendar-customization/
  * 
+ * Unless you're using JSF 2.2 (which is still not out yet at this moment) or
+ * MyFaces CODI (which I'd have expected that you would explicitly mention that)
+ * the @ViewScoped doesn't work in CDI. This also pretty much matches your
+ * problem symptoms.
+ * 
+ * http://stackoverflow.com/questions/14812238/jsf-view-scoped-bean-
+ * reconstructed-multiple-times
  * 
  * As per JSF 2.2 and higher, @ManagedBean is deprecated. Use @Named together with @javax.faces.view.ViewScoped,
  * @see https://stackoverflow.com/a/4347707/1925356
