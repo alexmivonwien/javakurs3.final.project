@@ -9,8 +9,12 @@ import java.util.Set;
 import javax.ejb.Stateless;
 import javax.ejb.TransactionAttribute;
 import javax.ejb.TransactionAttributeType;
+import javax.persistence.CascadeType;
 import javax.persistence.EntityManager;
+import javax.persistence.LockModeType;
 import javax.persistence.PersistenceContext;
+
+import org.hibernate.LockMode;
 
 import at.alex.javakurs3.cinema.model.Customer;
 import at.alex.javakurs3.cinema.model.FilmShow;
@@ -33,21 +37,35 @@ public class ReservationService {
 	private EntityManager em;
 
 	
+	/**
+	 * this method demonstrates:
+	 * 1.) Setting a pessimistic lock on each seatForShow entity - a lock is needed here,
+	 * because otherwise a concurrent transaction may create another (different) reservation
+	 * for exactly the same filmShow and (one or more of ) the same SeatForShow-s
+	 *  
+	 *  2.) the difference between em.persist(reservation) and em.merge(reservation)
+	 * ( Reservation has CascadeType.ALL @OneToMany relationship with SeatForShow), so the merge operation is cascaded.
+	 *  
+	 * Even if a em.persist(reservation) is called with a new reservation just created, the operation fails,
+	 * because the associated  SeatForShow objects are not new, they are already existing in the database.
+	 * On the other hand, em.merge(reservation) succeeds, because it merges the existing SeatForShow in the database
+	 * 
+	 * @param reservation
+	 * 
+	 * @see https://stackoverflow.com/questions/1069992/jpa-entitymanager-why-use-persist-over-merge
+	 * 
+	 */
 	@TransactionAttribute(TransactionAttributeType.REQUIRED)
 	public void saveReservation(Reservation reservation) {
-		
-//		Set <SeatForShow> mergedSeatsForShowSet = new HashSet <>();
-//		
-//		for (SeatForShow seatForShow : reservation.getSeatsReserved()){
-//			SeatForShow mergedSeatForShow = this.em.merge(seatForShow);
-//			mergedSeatsForShowSet.add(mergedSeatForShow);
-//		}
-//		reservation.setSeatsReserved(mergedSeatsForShowSet);
-//		this.em.merge(reservation.getFilmShow());
+
+		for (SeatForShow seatForShow : reservation.getSeatsReserved()){
+			 seatForShow = this.em.merge(seatForShow); // a merge is needed here, because seatForShow entities are detached at this moment 
+			 this.em.lock(seatForShow, LockModeType.PESSIMISTIC_WRITE);
+		}
 		this.em.merge(reservation);
 	}
 	
-	@TransactionAttribute(TransactionAttributeType.SUPPORTS)
+	@TransactionAttribute(TransactionAttributeType.REQUIRED)
 	public Reservation createReservation(Customer customer, FilmShow filmShow, Set<Seat> seats) {
 
 		BigDecimal totalPrice = BigDecimal.ZERO;
@@ -60,6 +78,8 @@ public class ReservationService {
 		// 1.) Mark the seats as occupied and compute the total price:
 		for (SeatForShow seatForShow : filmShow.getSeatsForShow()) {
 			if (seats.contains(seatForShow)) {
+				seatForShow = this.em.merge(seatForShow); // a merge is needed here, because seatForShow entities are detached at this moment 
+				 this.em.lock(seatForShow, LockModeType.PESSIMISTIC_WRITE);
 				seatForShow.setReservation(reservation);
 				seatsReserved.add(seatForShow);
 				totalPrice.add(seatForShow.getPrice());

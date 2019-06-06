@@ -69,7 +69,7 @@ public class CinemaSeatViewBean implements Serializable {
 				.getExternalContext();
 
 		Flash flash = extContext.getFlash();
-		this.selectedFilmShow = (FilmShow)flash.get(FilmAndCinemaChooserBean.SELECTED_FILM_SHOW + StringUtils.EMPTY);
+		this.selectedFilmShow = (FilmShow)flash.get(FilmAndCinemaChooserBean.SELECTED_FILM_SHOW);
 		
 		this.noOfColumns = selectedFilmShow.getNumberOfColumns();
 		
