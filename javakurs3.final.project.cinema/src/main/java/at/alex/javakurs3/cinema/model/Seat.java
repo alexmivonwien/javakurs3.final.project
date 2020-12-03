@@ -16,7 +16,7 @@ import javax.persistence.Table;
 public class Seat implements Comparable <Seat>, Seatable {
 
 	@Id
-	@GeneratedValue(strategy=GenerationType.AUTO)
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private int id;
 	private byte rowNo;
 	private byte seatNo;
